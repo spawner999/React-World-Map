@@ -1,7 +1,10 @@
 import React from 'react';
+import SearchBar from './search_bar';
 
 export default () => {
   return (
-    <div>Hello there</div>
+    <div>
+      <SearchBar />
+    </div>
   );
 }
