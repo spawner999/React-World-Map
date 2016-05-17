@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchWeather} from '../actions/index.js';
 
-class SearchBar extends Component {
+export default class SearchBar extends Component {
   constructor(props) {
     super(props);
 
