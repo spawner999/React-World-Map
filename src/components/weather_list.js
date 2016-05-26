@@ -8,9 +8,8 @@ class WeatherList extends Component {
     if(this.props.weather) {
       const {lat, lon} = this.props.weather.city.coord;
 
-      console.log(lat, lon);
       return(
-        <div className="map">
+        <div className="map">S
           <GoogleMap lon={lon} lat={lat} />
         </div>
 
