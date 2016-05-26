@@ -1,30 +1,65 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Chart from './chart';
+import GoogleMap from './google_map';
 
 class WeatherList extends Component {
-  renderWeather(cityData) {
-    const name = cityData.city.name;
-    return(
-      <tr key={name}>
-        <td>{name}</td>
-      </tr>
-    )
+  renderMap(){
+    if(this.props.weather) {
+      const {lat, lon} = this.props.weather.city.coord;
+
+      console.log(lat, lon);
+      return(
+        <div className="map">
+          <GoogleMap lon={lon} lat={lat} />
+        </div>
+
+      );
+    }
+  }
+
+  renderWeather() {
+    if(this.props.weather) {
+      const name = this.props.weather.city.name;
+      const temps = this.props.weather.list.map(weather => weather.main.temp);
+      const pressures = this.props.weather.list.map(weather => weather.main.pressure);
+      const humidities = this.props.weather.list.map(weather => weather.main.humidity);
+
+      return(
+        <tr key={name}>
+          <td>{name}</td>
+          <td>
+            <Chart data={temps} color="red" units="K"/>
+          </td>
+          <td>
+            <Chart data={pressures} color="green" units="hPa"/>
+          </td>
+          <td>
+            <Chart data={humidities} color="blue" units="%"/>
+          </td>
+        </tr>
+      )
+    }
   }
 
   render() {
     return (
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th>Pressure</th>
-            <th>Humidity</th>
-            <th>Temperature</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.weather.map(this.renderWeather)}
-        </tbody>
-      </table>
+      <div>
+        <div>{this.renderMap()}</div>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Pressure</th>
+              <th>Humidity</th>
+              <th>Temperature</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderWeather()}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
